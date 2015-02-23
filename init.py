@@ -107,16 +107,16 @@ class Model_Input(Module):
         basedict = {"name": model_info["GageID"], "area": area, "xlat": xlat, "whc":177}
         model_info["Basin Dict"] = basedict
 
-##        #get zipped shapefile
-##        shp = self.getInputFromPort("Shapefile").name
-##        print shp
-##        wkdir = os.path.join(model_info['Directory'],'BASE')
-##        os.chdir(wkdir)
-##        try:
-##            uploadshapefile.upload_shapefile(shp)
-##        except:
-##            print(shp_name + " already exists on the GDP")
-##        model_info["Zipped Shapefile"] = os.path.join(wkdir,'G'+model_info['GageID']+"_shp.zip")
+        #get zipped shapefile
+        shp = self.getInputFromPort("Shapefile").name
+        print shp
+        wkdir = os.path.join(model_info['Directory'],'BASE')
+        os.chdir(wkdir)
+        try:
+            uploadshapefile.upload_shapefile(shp)
+        except:
+            print(shp_name + " already exists on the GDP")
+        model_info["Zipped Shapefile"] = os.path.join(wkdir,'G'+model_info['GageID']+"_shp.zip")
 
         self.setResult("model_info", model_info)
 
@@ -358,46 +358,6 @@ class WBM_FC(Module):
         area= float(BasinDict['area'])
         #is whc used in WBM_FC
         whc= float(BasinDict['whc'])
-
-class WBM_FC(Module):
-    _input_ports = [("model_info", '(edu.utah.sci.vistrails.basic:Dictionary)')]
-
-    _output_ports = [("model_info", '(edu.utah.sci.vistrails.basic:Dictionary)')]
-
-    def compute(self):
-
-        #Build list of gcm's for where output should be stored
-        model_info = self.getInputFromPort("model_info")
-        curdir = model_info['Directory']
-        os.chdir(curdir)
-        wkdir = os.path.join(curdir, 'FC')
-        os.listdir(wkdir)
-        gcm_list = []
-        for climate_data in os.listdir(wkdir):
-            clim = os.path.join(wkdir, climate_data)
-            if os.path.isdir(clim):
-                for scenario in os.listdir(clim):
-                    scen = os.path.join(clim, scenario)
-                    if os.path.isdir(scen):
-                        for gcm_name in os.listdir(scen):
-                            gcmdir = os.path.join(scen, gcm_name)
-                            if os.path.isdir(gcmdir):
-                                for gcm_name_run in os.listdir(gcmdir):
-                                    gcmnamedir = os.path.join('FC', climate_data, scenario, gcm_name, gcm_name_run)
-                                    gcm_list.append(gcmnamedir)
-
-
-        #Define climate
-        calClimate = model_info['Climate']
-        #BasinDict={'name':'G06746095', 'xlat':'40.53', 'area':'8.12','whc':'80'}
-        BasinDict = model_info['Basin Dict']
-        basin = BasinDict['name']
-        xlat = float(BasinDict['xlat'])
-        area= float(BasinDict['area'])
-        #is whc used in WBM_FC
-        whc= float(BasinDict['whc'])
-
-        print(gcm_list)
 
 def initialize(*args, **keywords):
 

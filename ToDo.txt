@@ -1,0 +1,36 @@
+2/23/2014 
+
+-This is a list of changes/modifications to make to the WBM VisTrails Package
+
+General Model notes
+--------------------
+-List of python/R dependencies outside of base packages
+-Short List of descriptions of ind codes and functions
+-Create mechansim/stopping point so if the program cuts out (such as during GDP step), entire program does not have to rerun
+
+I.Model Input
+--------------
+-Fill out background and description of arguments in the module information portion
+-Change name of Calibration Start Date/End Date arguments to Simulation Start Date/End Date
+-Create pyGDP module for soil moisture storage capacity
+
+II.NWIS Streamflow
+------------------
+
+III. GDP
+--------
+-Fix GDP for current conditions, cutting off the first month of temperature for monthly climate data
+-Modify GDP for future conditions to include CMIP5 data
+-Ensure that when downloading downscaled data and GDP process is cut off, module does not retrieve climate
+ data that has successfully been downloaded and formatted
+ 
+IV. WBM (CC)
+------------
+-Enable model simulation and performance statistics for the evalaution period
+-Modify monthly hydrograph for POR so that line for simulated data is red, not black
+-Ensure if there is NA for measured streamflow for a certain POR, NA for those timesteps are being carried over to the climate data
+
+V. WBM (FC)
+-----------
+-Need to hookup and make active for the program
+-Finish graphics package
